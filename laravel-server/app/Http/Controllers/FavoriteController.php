@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorite;
+use App\Models\Item;
+use App\Models\User;
 
 class FavoriteController extends Controller
 {
@@ -17,6 +19,22 @@ class FavoriteController extends Controller
 
         return response()->json([
             "status" => "Success",
+        ], 200);
+    }
+    //Get user's favorites
+    public function getFavorites(Request $request){
+        $user_id = $request->user_id;
+        
+        //$favorites = User::with('favorite')->get();
+        //return view('view_name', compact('favorites'));
+
+        $favorite_items = User::find($user_id)->items()->get();
+        
+        //$favorites = Item::with('user_id');
+        //$favorite_items= $favorites->favorites();
+        return response()->json([
+            "status" => "success",
+            "favorites" => $favorite_items
         ], 200);
     }
 }
