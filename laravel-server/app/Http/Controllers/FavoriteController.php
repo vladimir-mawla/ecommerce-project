@@ -7,6 +7,7 @@ use App\Models\Favorite;
 
 class FavoriteController extends Controller
 {
+    //Add item to favorites
     public function favorite(Request $request){
 
         $favorite = new Favorite;
