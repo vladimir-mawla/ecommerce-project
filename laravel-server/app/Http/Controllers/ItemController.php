@@ -29,4 +29,14 @@ class ItemController extends Controller
                 "status" => "Success",
             ], 200);
         }
+        //Get item by name
+        public function searchItem(Request $request){
+            $name = $request->name;
+            $item = Item::where("name", "LIKE", "%$name%")->get();
+            
+            return response()->json([
+                "status" => "Success",
+                "result" => $item
+            ], 200);
+        }
 }
