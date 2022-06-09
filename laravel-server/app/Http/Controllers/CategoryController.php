@@ -39,4 +39,12 @@ class CategoryController extends Controller
                 "result" => $category
             ], 200);
         }
+        //Get all categories
+        public function getCats(){
+            $category = Category::all();
+            return response()->json([
+                "status" => "success",
+                "items" => $category
+            ], 200);
+        }
 }
