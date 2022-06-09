@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,10 @@ Route::group(['prefix' => 'items'], function(){
     Route::get('/getitems', [ItemController::class, 'getItems']);
     Route::post('/additem', [ItemController::class, 'addItem']);
     Route::post('/searchitem', [ItemController::class, 'searchItem']);
+});
+
+Route::group(['prefix' => 'favorites'], function(){
+    Route::post('/favorite', [FavoriteController::class, 'favorite']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
