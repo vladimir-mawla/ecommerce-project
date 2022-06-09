@@ -28,4 +28,15 @@ class CategoryController extends Controller
                 "item" => $category,
             ], 200);
         }
+
+        //search categories
+        public function searchCat(Request $request){
+            $name = $request->name;
+            $category = Category::where("name", "LIKE", "%$name%")->get();
+            
+            return response()->json([
+                "status" => "Success",
+                "result" => $category
+            ], 200);
+        }
 }

@@ -41,6 +41,7 @@ Route::group(['prefix' => 'favorites'], function(){
 Route::group(['prefix' => 'categories'], function(){
     Route::post('/addcat', [CategoryController::class, 'addCat']);
     Route::post('/getcatbyid', [CategoryController::class, 'getCatById']);
+    Route::post('/searchcat', [CategoryController::class, 'searchCat']);
 
 });
 
