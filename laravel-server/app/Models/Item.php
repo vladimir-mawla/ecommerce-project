@@ -10,7 +10,7 @@ class Item extends Model
     use HasFactory;
 
     public function favorites(){
-        return $this->belongsToMany(Favorite::class, 'likes');
+        return $this->belongsToMany(Favorite::class);
     }
 
    

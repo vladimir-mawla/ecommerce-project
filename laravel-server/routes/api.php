@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,11 @@ Route::group(['prefix' => 'items'], function(){
 Route::group(['prefix' => 'favorites'], function(){
     Route::post('/favorite', [FavoriteController::class, 'favorite']);
     Route::post('/getfavorites', [FavoriteController::class, 'getFavorites']);
+
+});
+
+Route::group(['prefix' => 'categories'], function(){
+    Route::post('/addcat', [CategoryController::class, 'addCat']);
 
 });
 
