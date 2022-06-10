@@ -37,6 +37,8 @@ function onClick(event) {
 
     .then((res) => {
       console.log(res.data);
+      var access_token = res.data["access_token"]
+      localStorage.setItem('access_token', access_token)
       if (res.data["error"] == "Unauthorized") {
         alert("User not Found");
       } else {
