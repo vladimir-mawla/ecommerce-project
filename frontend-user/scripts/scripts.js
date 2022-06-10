@@ -5,5 +5,23 @@ function submit() {
     if (login_email.value == "" || login_password.value == "") {
       
         alert("empty data")
-    } 
+    } else {let form = new FormData() 
+      
+        form.append("email", login_email.value);
+        form.append("password", login_password.value);
+        
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/api/login',
+          data: form,
+        })
+    
+        .then(function(response){
+
+    
+        })
+        
+    
+    
+      }
   }
