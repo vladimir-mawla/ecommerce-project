@@ -1,10 +1,9 @@
+
 /*Login */
 document.getElementById("find-item").addEventListener("click", findItems);
 
 let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
-let item_token = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
+let item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 function findItems(event) {
   event.preventDefault();
@@ -51,7 +50,6 @@ function findItems(event) {
 
 
 
-
 window.onload = function(){
 let item_url = "http://127.0.0.1:8000/api/items/getitems";
 var item_search = document.getElementById("item_search");
@@ -75,24 +73,26 @@ fetch(item_url, {
     }))
   )
 
-  .then((res) => {
+  .then((response) => {
     
-
     list_items.innerHTML = "";
     for (var i = 0; i < response.data["items"].length; i++) {
       var item = response.data["items"][i];
 
       const card = document.createElement("div");
       card.className = "item";
-      card.innerHTML = `<img src="${item["image"]}" class="item-image">
-                            <div class="item-about">
-                                <div>
-                                    <h2>${item["name"]}</h2>
-                                </div>
-                                <div>
-                                    <h3>${item["price"]} $</h3>
-                                </div>
-                            </div>`;
+      card.innerHTML = `<div class ="item-img">
+                            <img src="${item["image"]}" class="item-image">
+                        </div>
+                        <hr>
+                        <div class="item-name">
+                            <h2>${item["name"]}</h2>
+                        </div>
+                        <hr>
+                        <div class="item-price">
+                            <h3>${item["price"]} $</h3>
+                        </div>
+                        `;
 
       list_items.appendChild(card);
     }
