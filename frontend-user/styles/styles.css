@@ -71,3 +71,40 @@
     color: #b3b3b3;
     font-size: 12px;
 }
+
+/*Users*/
+#list-items {
+    margin-top: 50px;
+    margin-bottom: 5%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+}
+.item {
+    border: 5px;
+    border-width: 5px;
+    border-color: #525952;
+    border-style:groove;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    margin-bottom: 5%;
+    height: 250px;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.item div {
+    align-items: center;
+    text-align: center;
+}
+.item-name{
+    height: 20px;
+}
+.item-img{
+    height: 90px;
+}
