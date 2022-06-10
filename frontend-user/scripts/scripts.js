@@ -18,10 +18,11 @@ function submit() {
     
         .then(function(response){
 
-    
+          if(response.data["error"] == "Unauthorized") {
+            alert("Wrong email/password")
+          } else {
+            location.href='../users.html'
+          }
         })
-        
-    
-    
       }
   }
