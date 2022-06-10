@@ -3,20 +3,18 @@ document.getElementById("signup_button").addEventListener("click", onClick);
 
 
 let signup_url = "http://127.0.0.1:8000/api/register";
-let signup_token = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
+let signup_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
 var signup_name = document.getElementById("signup_name");
 var signup_email = document.getElementById("signup_email");
 var signup_password = document.getElementById("signup_password");
-var signup_password_confirmation = document.getElementById(
-    "signup_password_confirmation"
-);
+var signup_password_confirmation = document.getElementById("signup_password_confirmation");
 
 function onClick(event) {
     if (signup_name.value == "" || signup_email.value == "" || signup_password.value == "" || signup_password_confirmation.value == ""){
         alert("Fill All Fields")
     }else {
+        
   event.preventDefault();
   console.log("hello");
 
@@ -29,6 +27,8 @@ function onClick(event) {
       "X-Requested-With": "XMLHttpRequest",
       "X-CSRF-TOKEN": signup_token,
     },
+
+
     method: "post",
     credentials: "same-origin",
     body: JSON.stringify({
@@ -38,12 +38,15 @@ function onClick(event) {
       password_confirmation: signup_password_confirmation.value,
     }),
   })
+
+
     .then((response) =>
       response.json().then((data) => ({
         data: data,
         status: response.status,
       }))
     )
+
     .then((res) => {
       if (res.data["email"] == "The email must be a valid email address.") {
         alert("Enter a Valid Email Address");
@@ -61,6 +64,7 @@ function onClick(event) {
         location.href = "../index.html";
       }
     })
+
     .catch(function (error) {
       console.log(error);
     });
