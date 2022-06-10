@@ -1,18 +1,16 @@
 /*Login */
-document.getElementById("find-item").addEventListener("click", onClick); 
+document.getElementById("find-item").addEventListener("click", findItems);
 
-let item_url = "http://127.0.0.1:8000/api/items/searchitem";
-let item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
+let item_token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
 
-function onClick(event) {
-
+function findItems(event) {
   event.preventDefault();
   console.log("hello");
 
-  var item_search = document.getElementById("item_search");
-  
-
-  fetch(item_url, {
+  fetch(searching_item_url, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
@@ -26,7 +24,6 @@ function onClick(event) {
       name: item_search.value,
     }),
   })
-
     .then((response) =>
       response.json().then((data) => ({
         data: data,
@@ -42,8 +39,62 @@ function onClick(event) {
         location.href = "../items.html";
       }
     })
-    
+
     .catch(function (error) {
       console.log(error);
     });
+}
+
+
+
+
+
+
+
+
+window.onload = function(){
+let item_url = "http://127.0.0.1:8000/api/items/getitems";
+var item_search = document.getElementById("item_search");
+var list_items = document.getElementById("list-items");
+
+fetch(item_url, {
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json, text-plain, /",
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-TOKEN": item_token,
+  },
+
+  method: "get",
+  credentials: "same-origin",
+})
+  .then((response) =>
+    response.json().then((data) => ({
+      data: data,
+      status: response.status,
+    }))
+  )
+
+  .then((res) => {
+    
+
+    list_items.innerHTML = "";
+    for (var i = 0; i < response.data["items"].length; i++) {
+      var item = response.data["items"][i];
+
+      const card = document.createElement("div");
+      card.className = "item";
+      card.innerHTML = `<img src="${item["image"]}" class="item-image">
+                            <div class="item-about">
+                                <div>
+                                    <h2>${item["name"]}</h2>
+                                </div>
+                                <div>
+                                    <h3>${item["price"]} $</h3>
+                                </div>
+                            </div>`;
+
+      list_items.appendChild(card);
+    }
+  });
 }
