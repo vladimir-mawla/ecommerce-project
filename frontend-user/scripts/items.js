@@ -1,7 +1,7 @@
 
 /*Login */
 document.getElementById("find-item").addEventListener("click", findItems);
-
+document.getElementById("get-favs").addEventListener("click", getFavs);
 let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
 let item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
@@ -97,4 +97,57 @@ fetch(item_url, {
       list_items.appendChild(card);
     }
   });
+}
+
+function getFavs(){
+
+    let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
+    var list_items = document.getElementById("list-items");
+
+    fetch(favs_url, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json, text-plain, /",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-TOKEN": item_token,
+        },
+      
+        method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+          name: item_search.value,
+        }),
+      })
+        .then((response) =>
+          response.json().then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+        )
+      
+        .then((response) => {
+          
+          list_items.innerHTML = "";
+          for (var i = 0; i < response.data["items"].length; i++) {
+            var item = response.data["items"][i];
+      
+            const card = document.createElement("div");
+            card.className = "item";
+            card.innerHTML = `<div class ="item-img">
+                                  <img src="${item["image"]}" class="item-image">
+                              </div>
+                              <hr>
+                              <div class="item-name">
+                                  <h2>${item["name"]}</h2>
+                              </div>
+                              <hr>
+                              <div class="item-price">
+                                  <h3>${item["price"]} $</h3>
+                              </div>
+                              `;
+      
+            list_items.appendChild(card);
+          }
+        });
+      
 }
