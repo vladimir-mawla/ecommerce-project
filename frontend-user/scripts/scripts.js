@@ -1,28 +1,42 @@
-var login_email = document.getElementById("login_email")
-var login_password = document.getElementById("login_password")
-document.getElementById("login_button").addEventListener("click", submit)
-function submit() {
-    if (login_email.value == "" || login_password.value == "") {
-      
-        alert("empty data")
-    } else {let form = new FormData() 
-      
-        form.append("email", login_email.value);
-        form.append("password", login_password.value);
-        
-        axios({
-          method: 'post',
-          url: 'http://127.0.0.1:8000/api/login',
-          data: form,
-        })
-    
-        .then(function(response){
-
-          if(response.data["error"] == "Unauthorized") {
-            alert("Wrong email/password")
-          } else {
-            location.href='../users.html'
-          }
-        })
+document.getElementById("login_button").addEventListener("click", onClick);
+let url = "http://127.0.0.1:8000/api/login";
+let token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
+function onClick(event) {
+  event.preventDefault();
+  console.log("hello");
+  var login_email = document.getElementById("login_email");
+  var login_password = document.getElementById("login_password");
+  fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": token,
+    },
+    method: "post",
+    credentials: "same-origin",
+    body: JSON.stringify({
+      email: login_email.value,
+      password: login_password.value,
+    }),
+  })
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+    .then((res) => {
+      console.log(res.data);
+      if (res.data["error"] == "Unauthorized") {
+        alert("User not Found");
+      } else {
+        location.href = "../index.html";
       }
-  }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}

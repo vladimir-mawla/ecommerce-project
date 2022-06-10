@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
 </head>
 <body class="login">
@@ -21,7 +22,7 @@
           </nav>
           </div>
     <div class="form">
-        <form>
+        <div>
           <input type="email" placeholder="email" id="login_email" />
           <input type="password" placeholder="password" id="login_password"/>
           <button id="login_button">login</button>
@@ -29,7 +30,8 @@
             <a href="./signup.html">Create an account</a>
           </p>
           
-        </form>
+        </div>
       </div>
+      <script src="../scripts/scripts.js"></script>
 </body>
 </html>
