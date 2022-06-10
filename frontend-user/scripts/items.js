@@ -100,11 +100,11 @@ fetch(item_url, {
 }
 
 
-
-
+var user_id = null;
+window.onload = function(){
 var access_token = localStorage.getItem("access_token")
 let profile_url = "http://127.0.0.1:8000/api/profile";
-var user_id = null;
+
 
 fetch(profile_url, {
     headers: {
@@ -135,7 +135,7 @@ fetch(profile_url, {
     .catch(function (error) {
       console.log(error);
     });
-
+}
 
 
 
