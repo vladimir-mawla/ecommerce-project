@@ -99,11 +99,56 @@ fetch(item_url, {
   });
 }
 
+
+
+
+var access_token = localStorage.getItem("access_token")
+let profile_url = "http://127.0.0.1:8000/api/profile";
+var user_id = null;
+
+fetch(profile_url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": login_token,
+      'Authorization': `Bearer ${access_token}`,
+      'Accept': 'application/json'
+    },
+
+    method: "post",
+    credentials: "same-origin",
+
+  })
+
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+
+    .then((res) => {
+        user_id = res.data["id"]
+    })
+    
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+
+
+
+
+
+
+
+
 function getFavs(){
 
     let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
     var list_items = document.getElementById("list-items");
-
     fetch(favs_url, {
         headers: {
           "Content-Type": "application/json",
