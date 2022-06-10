@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddToItemsTable extends Migration
+class AddToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddToItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('items', function (Blueprint $table) {
-            $table->integer('id')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->increments('id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddToItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('items', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

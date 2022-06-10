@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Document</title>
+</head>
+<body class="login">
+    <div class="container">
+        <nav class="nav">
+            <div class="nav-item">
+            <h2>E-shop</h2>
+            </div>
+            <div>
+            <ul class="nav-item">
+              <li><a href="../index.html">Homepage</a></li>
+            </ul>
+            </div>
+          </nav>
+          </div>
+    <div class="form">
+        <div>
+            <input type="text" placeholder="name" id="signup_name" />
+          <input type="email" placeholder="email" id="signup_email" />
+          <input type="password" placeholder="password" id="signup_password"/>
+          <input type="password" placeholder="confirm password" id="signup_password_confirmation"/>
+          <button id="signup_button">login</button>
+          <p class="goto-link">
+            <a href="./signup.html">Create an account</a>
+          </p>
+          
+        </div>
+      </div>
+      <script src="../scripts/signup.js"></script>
+</body>

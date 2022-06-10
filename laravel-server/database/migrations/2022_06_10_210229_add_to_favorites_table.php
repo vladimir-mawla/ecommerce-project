@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddToUsersTable extends Migration
+class AddToFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('id')->change();
+        Schema::table('favorites', function (Blueprint $table) {
+            $table->dropForeign('favorites_item_id_foreign');
         });
     }
 
@@ -25,7 +25,7 @@ class AddToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('favorites', function (Blueprint $table) {
             //
         });
     }
