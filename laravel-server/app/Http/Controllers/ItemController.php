@@ -7,6 +7,10 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
+
+        public function hi(){
+            echo "You are not Admin";
+        }
         //Get all items
         public function getItems(){
             $items = Item::all();

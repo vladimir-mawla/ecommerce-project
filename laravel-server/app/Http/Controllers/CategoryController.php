@@ -40,7 +40,8 @@ class CategoryController extends Controller
             ], 200);
         }
         //Get all categories
-        public function getCats(){
+        public function getCats(Request $request){
+            $user_type = $request->user_type;
             $category = Category::all();
             return response()->json([
                 "status" => "success",

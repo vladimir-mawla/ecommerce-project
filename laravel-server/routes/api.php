@@ -6,6 +6,7 @@ use App\Http\Controllers\JWTController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Middleware\EcommerceMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,10 @@ use App\Http\Controllers\CategoryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/hi', [ItemController::class, 'hi']);
 Route::group(['middleware' => 'api'], function($router) {
     Route::post('/register', [JWTController::class, 'register']);
-    Route::post('/login', [JWTController::class, 'login']);
+    Route::post('/login', [JWTController::class, 'login'])->name('log-in');
     Route::post('/logout', [JWTController::class, 'logout']);
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
@@ -42,7 +44,7 @@ Route::group(['prefix' => 'categories'], function(){
     Route::post('/addcat', [CategoryController::class, 'addCat']);
     Route::post('/getcatbyid', [CategoryController::class, 'getCatById']);
     Route::post('/searchcat', [CategoryController::class, 'searchCat']);
-    Route::get('/getcats', [CategoryController::class, 'getcats']);
+    Route::get('/getcats', [CategoryController::class, 'getcats'])/*->middleware('admin')*/;
 
 });
 
