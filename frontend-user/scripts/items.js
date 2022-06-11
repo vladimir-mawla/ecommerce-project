@@ -128,6 +128,8 @@ window.onload = async function () {
     });
 
   function getFavs() {
+      var change = document.getElementById("get-favs")
+      change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
     let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
     var list_items = document.getElementById("list-items");
     fetch(favs_url, {
