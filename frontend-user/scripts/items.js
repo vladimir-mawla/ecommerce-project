@@ -2,10 +2,11 @@ window.onload = async function () {
   /*Login */
   document.getElementById("find-item").addEventListener("click", findItems);
   document.getElementById("get-favs").addEventListener("click", getFavs);
+  document.getElementById("find-category").addEventListener("click", findCats);
   let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
-  let item_token = document
-    .querySelector('meta[name="csrf-token"]')
-    .getAttribute("content");
+  var item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+  let search_cat_url = "http://127.0.0.1:8000/api/categories/searchcat";
+
 
   function findItems(event) {
     event.preventDefault();
@@ -33,12 +34,12 @@ window.onload = async function () {
       )
 
       .then((response) => {
-        var change = document.getElementById("get-favs")
+        var change = document.getElementById("get-favs");
         change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
         list_items.innerHTML = "";
         for (var i = 0; i < response.data["result"].length; i++) {
           var item = response.data["result"][i];
-  
+
           const card = document.createElement("div");
           card.className = "item";
           card.innerHTML = `<div class ="item-img">
@@ -53,7 +54,7 @@ window.onload = async function () {
                               <h3>${item["price"]} $</h3>
                           </div>
                           `;
-  
+
           list_items.appendChild(card);
         }
       })
@@ -65,6 +66,7 @@ window.onload = async function () {
 
   let item_url = "http://127.0.0.1:8000/api/items/getitems";
   var item_search = document.getElementById("item_search");
+  var cat_search = document.getElementById("cat_search");
   var list_items = document.getElementById("list-items");
 
   await fetch(item_url, {
@@ -113,13 +115,13 @@ window.onload = async function () {
 
   var access_token = localStorage.getItem("access_token");
   let profile_url = "http://127.0.0.1:8000/api/profile";
-
-  fetch(profile_url, {
+  
+  await fetch(profile_url, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
       "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-TOKEN": login_token,
+      "X-CSRF-TOKEN": item_token,
       Authorization: `Bearer ${access_token}`,
       Accept: "application/json",
     },
@@ -135,6 +137,10 @@ window.onload = async function () {
     )
 
     .then((res) => {
+      if(res.data["message"] == "Unauthenticated."){
+        alert("Session expired")
+        location.href = "./login.html";
+      }
       user_id = res.data["id"];
       console.log(user_id);
       console.log("worked?");
@@ -145,10 +151,11 @@ window.onload = async function () {
     });
 
   function getFavs() {
-      var change = document.getElementById("get-favs")
-      change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
+    var change = document.getElementById("get-favs");
+    change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
     let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
     var list_items = document.getElementById("list-items");
+
     fetch(favs_url, {
       headers: {
         "Content-Type": "application/json",
@@ -194,4 +201,62 @@ window.onload = async function () {
         }
       });
   }
+
+
+
+
+function findCats(event) {
+  event.preventDefault();
+
+  fetch(search_cat_url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": item_token,
+    },
+
+    method: "post",
+    credentials: "same-origin",
+    body: JSON.stringify({
+      name: cat_search.value,
+    }),
+  })
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+
+    .then((response) => {
+      var change = document.getElementById("get-favs");
+      change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
+      list_items.innerHTML = "";
+      for (var i = 0; i < response.data["result"].length; i++) {
+        var item = response.data["result"][i];
+
+        const card = document.createElement("div");
+        card.className = "item";
+        card.innerHTML = `<div class ="item-img">
+                            <img src="${item["image"]}" class="item-image">
+                        </div>
+                        <hr>
+                        <div class="item-name">
+                            <h2>${item["name"]}</h2>
+                        </div>
+                        <hr>
+                        <div class="item-price">
+                            <h3>${item["price"]} $</h3>
+                        </div>
+                        `;
+
+        list_items.appendChild(card);
+      }
+    })
+
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 };
