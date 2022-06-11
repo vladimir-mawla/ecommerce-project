@@ -33,6 +33,8 @@ window.onload = async function () {
       )
 
       .then((response) => {
+        var change = document.getElementById("get-favs")
+        change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
         list_items.innerHTML = "";
         for (var i = 0; i < response.data["result"].length; i++) {
           var item = response.data["result"][i];
