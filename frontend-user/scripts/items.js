@@ -100,7 +100,7 @@ fetch(item_url, {
 }
 
 
-var user_id = null;
+var user_id;
 window.onload = function(){
 var access_token = localStorage.getItem("access_token")
 let profile_url = "http://127.0.0.1:8000/api/profile";
@@ -130,6 +130,8 @@ fetch(profile_url, {
 
     .then((res) => {
         user_id = res.data["id"]
+        console.log(user_id)
+        console.log("worked?")
     })
     
     .catch(function (error) {
@@ -160,7 +162,7 @@ function getFavs(){
         method: "post",
         credentials: "same-origin",
         body: JSON.stringify({
-          name: item_search.value,
+          user_id: '7',
         }),
       })
         .then((response) =>
@@ -173,21 +175,21 @@ function getFavs(){
         .then((response) => {
           
           list_items.innerHTML = "";
-          for (var i = 0; i < response.data["items"].length; i++) {
-            var item = response.data["items"][i];
+          for (var i = 0; i < response.data["favorites"].length; i++) {
+            var favorite = response.data["favorites"][i];
       
             const card = document.createElement("div");
             card.className = "item";
             card.innerHTML = `<div class ="item-img">
-                                  <img src="${item["image"]}" class="item-image">
+                                  <img src="${favorite["image"]}" class="item-image">
                               </div>
                               <hr>
                               <div class="item-name">
-                                  <h2>${item["name"]}</h2>
+                                  <h2>${favorite["name"]}</h2>
                               </div>
                               <hr>
                               <div class="item-price">
-                                  <h3>${item["price"]} $</h3>
+                                  <h3>${favorite["price"]} $</h3>
                               </div>
                               `;
       

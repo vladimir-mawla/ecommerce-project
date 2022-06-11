@@ -42,7 +42,7 @@ function onClick(event) {
       if (res.data["error"] == "Unauthorized") {
         alert("User not Found");
       } else {
-        location.href = "../index.html";
+        location.href = "../pages/users.html";
       }
     })
     
