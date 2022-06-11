@@ -9,7 +9,7 @@
 
 document.getElementById("add_item").addEventListener("click", onClick); 
 
-let login_url = "http://127.0.0.1:8000/api/items/additem";
+
 let login_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 function onClick(event) {
@@ -17,13 +17,16 @@ function onClick(event) {
   event.preventDefault();
   console.log("hello");
 
-  var add_img = document.getElementById("add_img");
-  var add_name = document.getElementById("add_name");
-  var add_price = document.getElementById("add_price");
-  var add_cat = document.getElementById("add_cat");
+  let add_img = document.getElementById("add_img");
+  let add_name = document.getElementById("add_name");
+  let add_price = document.getElementById("add_price");
+  let add_cat = document.getElementById("add_cat");
+  console.log(add_img.value)
+  console.log(add_name.value)
+  console.log(add_price.value)
+  console.log(add_cat.value)
 
-
-  fetch(login_url, {
+  fetch("http://127.0.0.1:8000/api/items/additem", {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
@@ -34,7 +37,7 @@ function onClick(event) {
     method: "post",
     credentials: "same-origin",
     body: JSON.stringify({
-        img: add_img.value,
+        image: add_img.value,
         name: add_name.value,
         price: add_price.value,
         category_id: add_cat.value,
@@ -49,10 +52,18 @@ function onClick(event) {
     )
 
     .then((res) => {
+      if(res.data["message"]){
+        alert("price must be integer")
+      }
+
       
     })
     
     .catch(function (error) {
       console.log(error);
     });
+    add_img.value = '';
+    add_name.value = '';
+    add_price.value = '';
+    add_cat.value = '';
 }
