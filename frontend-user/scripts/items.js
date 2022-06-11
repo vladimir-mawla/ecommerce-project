@@ -11,7 +11,7 @@ window.onload = async function () {
     event.preventDefault();
     console.log("hello");
 
-    fetch(searching_item_url, {
+    fetch(search_item_url, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json, text-plain, /",
@@ -32,12 +32,27 @@ window.onload = async function () {
         }))
       )
 
-      .then((res) => {
-        console.log(res.data);
-        if (res.data["error"] == "Unauthorized") {
-          alert("User not Found");
-        } else {
-          location.href = "../items.html";
+      .then((response) => {
+        list_items.innerHTML = "";
+        for (var i = 0; i < response.data["result"].length; i++) {
+          var item = response.data["result"][i];
+  
+          const card = document.createElement("div");
+          card.className = "item";
+          card.innerHTML = `<div class ="item-img">
+                              <img src="${item["image"]}" class="item-image">
+                          </div>
+                          <hr>
+                          <div class="item-name">
+                              <h2>${item["name"]}</h2>
+                          </div>
+                          <hr>
+                          <div class="item-price">
+                              <h3>${item["price"]} $</h3>
+                          </div>
+                          `;
+  
+          list_items.appendChild(card);
         }
       })
 
