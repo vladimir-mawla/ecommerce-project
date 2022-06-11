@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <link href="./styles.css" rel="stylesheet">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Hello World!</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <h2>Add Item</h2>
+    <div class="upload">
+      <form>
+        <label for="img">Select image:</label>
+        <input name="img" type="file" id="add_img" onchange="encodeImageFileAsURL(this)">
+        <input type="text" placeholder="Item's name" id="add_name">
+        <input type="text" placeholder="Items price" id="add_price">
+        <label>Search Categories:</label>
+                <select name="categories" id="add_cat">
+                    <option value="1">Food</option>
+                    <option value="2">Fashion</option>
+                    <option value="3">Technology</option>
+                    <option value="4">Kitchen</option>
+                    <option value="5">Toys</option>
+                </select>
+        <button id="add_item">Submit</button>
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./scripts/admin.js"></script>
+</body>
+
+</html>
