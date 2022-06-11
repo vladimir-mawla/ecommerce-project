@@ -1,15 +1,56 @@
+window.onload = async function () {
+  /*Login */
+  document.getElementById("find-item").addEventListener("click", findItems);
+  document.getElementById("get-favs").addEventListener("click", getFavs);
+  let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
+  let item_token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
 
-/*Login */
-document.getElementById("find-item").addEventListener("click", findItems);
-document.getElementById("get-favs").addEventListener("click", getFavs);
-let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
-let item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+  function findItems(event) {
+    event.preventDefault();
+    console.log("hello");
 
-function findItems(event) {
-  event.preventDefault();
-  console.log("hello");
+    fetch(searching_item_url, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text-plain, /",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": item_token,
+      },
 
-  fetch(searching_item_url, {
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify({
+        name: item_search.value,
+      }),
+    })
+      .then((response) =>
+        response.json().then((data) => ({
+          data: data,
+          status: response.status,
+        }))
+      )
+
+      .then((res) => {
+        console.log(res.data);
+        if (res.data["error"] == "Unauthorized") {
+          alert("User not Found");
+        } else {
+          location.href = "../items.html";
+        }
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  let item_url = "http://127.0.0.1:8000/api/items/getitems";
+  var item_search = document.getElementById("item_search");
+  var list_items = document.getElementById("list-items");
+
+  await fetch(item_url, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
@@ -17,11 +58,8 @@ function findItems(event) {
       "X-CSRF-TOKEN": item_token,
     },
 
-    method: "post",
+    method: "get",
     credentials: "same-origin",
-    body: JSON.stringify({
-      name: item_search.value,
-    }),
   })
     .then((response) =>
       response.json().then((data) => ({
@@ -30,58 +68,14 @@ function findItems(event) {
       }))
     )
 
-    .then((res) => {
-      console.log(res.data);
-      if (res.data["error"] == "Unauthorized") {
-        alert("User not Found");
-      } else {
-        location.href = "../items.html";
-      }
-    })
+    .then((response) => {
+      list_items.innerHTML = "";
+      for (var i = 0; i < response.data["items"].length; i++) {
+        var item = response.data["items"][i];
 
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-
-
-
-
-
-
-window.onload = function(){
-let item_url = "http://127.0.0.1:8000/api/items/getitems";
-var item_search = document.getElementById("item_search");
-var list_items = document.getElementById("list-items");
-
-fetch(item_url, {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json, text-plain, /",
-    "X-Requested-With": "XMLHttpRequest",
-    "X-CSRF-TOKEN": item_token,
-  },
-
-  method: "get",
-  credentials: "same-origin",
-})
-  .then((response) =>
-    response.json().then((data) => ({
-      data: data,
-      status: response.status,
-    }))
-  )
-
-  .then((response) => {
-    
-    list_items.innerHTML = "";
-    for (var i = 0; i < response.data["items"].length; i++) {
-      var item = response.data["items"][i];
-
-      const card = document.createElement("div");
-      card.className = "item";
-      card.innerHTML = `<div class ="item-img">
+        const card = document.createElement("div");
+        card.className = "item";
+        card.innerHTML = `<div class ="item-img">
                             <img src="${item["image"]}" class="item-image">
                         </div>
                         <hr>
@@ -94,33 +88,28 @@ fetch(item_url, {
                         </div>
                         `;
 
-      list_items.appendChild(card);
-    }
-  });
-}
+        list_items.appendChild(card);
+      }
+    });
 
+  var user_id;
 
-var user_id;
-window.onload = function(){
-var access_token = localStorage.getItem("access_token")
-let profile_url = "http://127.0.0.1:8000/api/profile";
+  var access_token = localStorage.getItem("access_token");
+  let profile_url = "http://127.0.0.1:8000/api/profile";
 
-
-fetch(profile_url, {
+  fetch(profile_url, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
       "X-Requested-With": "XMLHttpRequest",
       "X-CSRF-TOKEN": login_token,
-      'Authorization': `Bearer ${access_token}`,
-      'Accept': 'application/json'
+      Authorization: `Bearer ${access_token}`,
+      Accept: "application/json",
     },
 
     method: "post",
     credentials: "same-origin",
-
   })
-
     .then((response) =>
       response.json().then((data) => ({
         data: data,
@@ -129,58 +118,47 @@ fetch(profile_url, {
     )
 
     .then((res) => {
-        user_id = res.data["id"]
-        console.log(user_id)
-        console.log("worked?")
+      user_id = res.data["id"];
+      console.log(user_id);
+      console.log("worked?");
     })
-    
+
     .catch(function (error) {
       console.log(error);
     });
-}
 
-
-
-
-
-
-
-
-
-function getFavs(){
-
+  function getFavs() {
     let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
     var list_items = document.getElementById("list-items");
     fetch(favs_url, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json, text-plain, /",
-          "X-Requested-With": "XMLHttpRequest",
-          "X-CSRF-TOKEN": item_token,
-        },
-      
-        method: "post",
-        credentials: "same-origin",
-        body: JSON.stringify({
-          user_id: '7',
-        }),
-      })
-        .then((response) =>
-          response.json().then((data) => ({
-            data: data,
-            status: response.status,
-          }))
-        )
-      
-        .then((response) => {
-          
-          list_items.innerHTML = "";
-          for (var i = 0; i < response.data["favorites"].length; i++) {
-            var favorite = response.data["favorites"][i];
-      
-            const card = document.createElement("div");
-            card.className = "item";
-            card.innerHTML = `<div class ="item-img">
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text-plain, /",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": item_token,
+      },
+
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify({
+        user_id: "7",
+      }),
+    })
+      .then((response) =>
+        response.json().then((data) => ({
+          data: data,
+          status: response.status,
+        }))
+      )
+
+      .then((response) => {
+        list_items.innerHTML = "";
+        for (var i = 0; i < response.data["favorites"].length; i++) {
+          var favorite = response.data["favorites"][i];
+
+          const card = document.createElement("div");
+          card.className = "item";
+          card.innerHTML = `<div class ="item-img">
                                   <img src="${favorite["image"]}" class="item-image">
                               </div>
                               <hr>
@@ -192,9 +170,9 @@ function getFavs(){
                                   <h3>${favorite["price"]} $</h3>
                               </div>
                               `;
-      
-            list_items.appendChild(card);
-          }
-        });
-      
-}
+
+          list_items.appendChild(card);
+        }
+      });
+  }
+};
