@@ -8,8 +8,8 @@
 
 
 document.getElementById("add_item").addEventListener("click", onClick); 
-
-
+document.getElementById("logout").addEventListener("click", logout);
+var access_token = localStorage.getItem("access_token");
 let login_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 function onClick(event) {
@@ -66,4 +66,30 @@ function onClick(event) {
     add_name.value = '';
     add_price.value = '';
     add_cat.value = '';
+}
+
+function logout() {
+
+
+  fetch("http://127.0.0.1:8000/api/logout", {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": login_token,
+      Authorization: `Bearer ${access_token}`,
+      Accept: "application/json",
+    },
+    method: "post",
+  })
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+
+    .then((response) => {
+      location.href = "../index.html";
+    });
 }
