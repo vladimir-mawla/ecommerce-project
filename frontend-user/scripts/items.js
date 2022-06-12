@@ -44,7 +44,7 @@ window.onload = async function () {
           const card = document.createElement("div");
           card.className = "item";
           card.innerHTML = `<div class ="item-img">
-                              <img src="${item["image"]}" class="item-image">
+                              <img src="${item["img"]}" class="item-image">
                           </div>
                           <hr>
                           <div class="item-name">
@@ -96,7 +96,7 @@ window.onload = async function () {
         const card = document.createElement("div");
         card.className = "item";
         card.innerHTML = `<div class ="item-img">
-                            <img src="${item["image"]}" class="item-image">
+                            <img src="${item["img"]}" class="item-image">
                         </div>
                         <hr>
                         <div class="item-name">
@@ -225,7 +225,7 @@ window.onload = async function () {
           const card = document.createElement("div");
           card.className = "item";
           card.innerHTML = `<div class ="item-img">
-                                  <img src="${favorite["image"]}" class="item-image">
+                                  <img src="${favorite["img"]}" class="item-image">
                               </div>
                               <hr>
                               <div class="item-name">
@@ -276,7 +276,7 @@ window.onload = async function () {
           const card = document.createElement("div");
           card.className = "item";
           card.innerHTML = `<div class ="item-img">
-                            <img src="${item["image"]}" class="item-image">
+                            <img src="${item["img"]}" class="item-image">
                         </div>
                         <hr>
                         <div class="item-name">
