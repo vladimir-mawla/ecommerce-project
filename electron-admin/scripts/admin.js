@@ -5,15 +5,56 @@
 // selectively enable features needed in the rendering
 // process.
 
-
-
-document.getElementById("add_item").addEventListener("click", onClick); 
+document.getElementById("add-cat-form").addEventListener("click", addNewCat);
+document.getElementById("add_item").addEventListener("click", onClick);
 document.getElementById("logout").addEventListener("click", logout);
 var access_token = localStorage.getItem("access_token");
-let login_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+let login_token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
+
+function addNewCat(event) {
+  event.preventDefault();
+  var change = document.getElementById("form");
+  change.innerHTML = "";
+
+  const form = document.createElement("div");
+  form.className = "item";
+  form.innerHTML = `<form>
+        <div class="upload_form">
+          <input type="text" placeholder="Category's name" id="add_name">
+          <div><button id="submit-cat">Submit</button></div>
+        </div>
+      </form>
+                        `;
+
+  change.appendChild(form);
+  document.getElementById("submit-cat").addEventListener("click", submitCat);
+
+function submitCat(){
+  fetch("http://127.0.0.1:8000/api/categories/addcat", {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": login_token,
+    },
+    method: "post",
+    credentials: "same-origin",
+    body: JSON.stringify({
+      name: add_name.value,
+    }),
+  }).then((response) =>
+    response.json().then((data) => ({
+      data: data,
+      status: response.status,
+    }))
+  );
+
+  }
+}
 
 function onClick(event) {
-
   event.preventDefault();
   console.log("hello");
 
@@ -22,48 +63,35 @@ function onClick(event) {
   let add_price = document.getElementById("add_price");
   let add_cat = document.getElementById("add_cat");
 
-
-
   var s;
-    var file = add_img.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        s = reader.result;
-       
+  var file = add_img.files[0];
+  var reader = new FileReader();
+  reader.onloadend = function () {
+    s = reader.result;
 
-      fetch("http://127.0.0.1:8000/api/items/additem", {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json, text-plain, /",
-          "X-Requested-With": "XMLHttpRequest",
-          "X-CSRF-TOKEN": login_token,
-        },
-        method: "post",
-        credentials: "same-origin",
-        body: JSON.stringify({
-            image: s,
-            name: add_name.value,
-            price: add_price.value,
-            category_id: add_cat.value,
-          }),
-      })
-        .then((res) => {
-          console.log(res)
-        })
-      
-        
-    }
-    reader.readAsDataURL(file);
-    
-
-
-    
+    fetch("http://127.0.0.1:8000/api/items/additem", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text-plain, /",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": login_token,
+      },
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify({
+        image: s,
+        name: add_name.value,
+        price: add_price.value,
+        category_id: add_cat.value,
+      }),
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+  reader.readAsDataURL(file);
 }
 
-
 function logout() {
-
-
   fetch("http://127.0.0.1:8000/api/logout", {
     headers: {
       "Content-Type": "application/json",
