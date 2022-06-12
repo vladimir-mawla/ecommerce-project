@@ -39,10 +39,11 @@
     background: #f1f0f0;
     width: 100%;
     border: 0;
-    margin: 10px 15px;
+    margin: 10px 0;
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
+    align-items: center;
 }
 #form button {
     font-family: sans-serif;
