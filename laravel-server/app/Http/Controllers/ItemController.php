@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\User;
 
 class ItemController extends Controller
 {
@@ -12,12 +13,23 @@ class ItemController extends Controller
             echo "You are not Admin";
         }
         //Get all items
-        public function getItems(){
+        public function getItems(Request $request){
             $items = Item::all();
-            return response()->json([
-                "status" => "success",
-                "items" => $items
-            ], 200);
+            $liked = User::find($request->user_id)->items()->get();
+            if(count($liked) != 0){
+                return response()->json([
+                    "status" => "success",
+                    "items" => $items,
+                    "liked" => "yes"
+                ], 200);
+            }else{
+                return response()->json([
+                    "status" => "success",
+                    "items" => $items,
+                    "liked" => "no"
+                ], 200);
+            }
+ 
         }
         //Add item
         public function addItem(Request $request){

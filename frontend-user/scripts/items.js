@@ -9,7 +9,44 @@ window.onload = async function () {
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
   let search_cat_url = "http://127.0.0.1:8000/api/categories/getcatitems";
+  var user_id;
 
+  var access_token = localStorage.getItem("access_token");
+  let profile_url = "http://127.0.0.1:8000/api/profile";
+
+  await fetch(profile_url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": item_token,
+      Authorization: `Bearer ${access_token}`,
+      Accept: "application/json",
+    },
+
+    method: "post",
+    credentials: "same-origin",
+  })
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+
+    .then((res) => {
+      if (res.data["message"] == "Unauthenticated.") {
+        alert("Session expired");
+        location.href = "./login.html";
+      }
+      user_id = res.data["id"];
+      console.log(user_id);
+      console.log("worked?");
+    })
+
+    .catch(function (error) {
+      console.log(error);
+    });
   function findItems(event) {
     event.preventDefault();
     console.log("hello");
@@ -71,7 +108,7 @@ window.onload = async function () {
   var cat_search = document.getElementById("cat_search");
   var list_items = document.getElementById("list-items");
 
-  await fetch(item_url, {
+  fetch("http://127.0.0.1:8000/api/items/getitems", {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
@@ -79,8 +116,11 @@ window.onload = async function () {
       "X-CSRF-TOKEN": item_token,
     },
 
-    method: "get",
+    method: "post",
     credentials: "same-origin",
+    body: JSON.stringify({
+      user_id: user_id,
+    }),
   })
     .then((response) =>
       response.json().then((data) => ({
@@ -155,44 +195,7 @@ window.onload = async function () {
       }
     });
 
-  var user_id;
-
-  var access_token = localStorage.getItem("access_token");
-  let profile_url = "http://127.0.0.1:8000/api/profile";
-
-  await fetch(profile_url, {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json, text-plain, /",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-TOKEN": item_token,
-      Authorization: `Bearer ${access_token}`,
-      Accept: "application/json",
-    },
-
-    method: "post",
-    credentials: "same-origin",
-  })
-    .then((response) =>
-      response.json().then((data) => ({
-        data: data,
-        status: response.status,
-      }))
-    )
-
-    .then((res) => {
-      if (res.data["message"] == "Unauthenticated.") {
-        alert("Session expired");
-        location.href = "./login.html";
-      }
-      user_id = res.data["id"];
-      console.log(user_id);
-      console.log("worked?");
-    })
-
-    .catch(function (error) {
-      console.log(error);
-    });
+  
 
   function getFavs() {
     var change = document.getElementById("get-favs");

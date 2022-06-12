@@ -28,7 +28,7 @@ Route::group(['middleware' => 'api'], function($router) {
 });
 
 Route::group(['prefix' => 'items'], function(){
-    Route::get('/getitems', [ItemController::class, 'getItems']);
+    Route::post('/getitems', [ItemController::class, 'getItems']);
     Route::post('/additem', [ItemController::class, 'addItem']);
     Route::post('/searchitem', [ItemController::class, 'searchItem']);
     Route::post('/getitembyid', [ItemController::class, 'getItemById']);
