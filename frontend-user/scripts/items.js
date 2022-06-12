@@ -4,9 +4,10 @@ window.onload = async function () {
   document.getElementById("get-favs").addEventListener("click", getFavs);
   document.getElementById("find-category").addEventListener("click", findCats);
   let search_item_url = "http://127.0.0.1:8000/api/categories/getitems";
-  var item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+  var item_token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
   let search_cat_url = "http://127.0.0.1:8000/api/categories/getcatitems";
-
 
   function findItems(event) {
     event.preventDefault();
@@ -103,11 +104,22 @@ window.onload = async function () {
                         </div>
                         <hr>
                         <div class="item-price">
-                            <h3>${item["price"]} $</h3>
+                            <h3>${item["price"]} <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
 
         list_items.appendChild(card);
+        
+
+      }
+      var btn = document.getElementsByClassName("fav")
+      for (let i of btn){
+        
+        
+        i.addEventListener("click", function onClick() {
+          i.style.color = "red";
+          console.log(i.id)
+        });
       }
     });
 
@@ -115,7 +127,7 @@ window.onload = async function () {
 
   var access_token = localStorage.getItem("access_token");
   let profile_url = "http://127.0.0.1:8000/api/profile";
-  
+
   await fetch(profile_url, {
     headers: {
       "Content-Type": "application/json",
@@ -137,8 +149,8 @@ window.onload = async function () {
     )
 
     .then((res) => {
-      if(res.data["message"] == "Unauthenticated."){
-        alert("Session expired")
+      if (res.data["message"] == "Unauthenticated.") {
+        alert("Session expired");
         location.href = "./login.html";
       }
       user_id = res.data["id"];
@@ -202,43 +214,40 @@ window.onload = async function () {
       });
   }
 
+  function findCats(event) {
+    event.preventDefault();
+    console.log(cat_search.value);
+    fetch("http://127.0.0.1:8000/api/categories/getcatitems", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text-plain, /",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": item_token,
+      },
 
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify({
+        category_id: cat_search.value,
+      }),
+    })
+      .then((response) =>
+        response.json().then((data) => ({
+          data: data,
+          status: response.status,
+        }))
+      )
 
+      .then((response) => {
+        var change = document.getElementById("get-favs");
+        change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
+        list_items.innerHTML = "";
+        for (var i = 0; i < response.data["favorites"].length; i++) {
+          var item = response.data["favorites"][i];
 
-function findCats(event) {
-  event.preventDefault();
-  console.log(cat_search.value)
-  fetch("http://127.0.0.1:8000/api/categories/getcatitems", {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json, text-plain, /",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-TOKEN": item_token,
-    },
-
-    method: "post",
-    credentials: "same-origin",
-    body: JSON.stringify({
-      category_id: cat_search.value,
-    }),
-  })
-    .then((response) =>
-      response.json().then((data) => ({
-        data: data,
-        status: response.status,
-      }))
-    )
-
-    .then((response) => {
-      var change = document.getElementById("get-favs");
-      change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
-      list_items.innerHTML = "";
-      for (var i = 0; i < response.data["favorites"].length; i++) {
-        var item = response.data["favorites"][i];
-
-        const card = document.createElement("div");
-        card.className = "item";
-        card.innerHTML = `<div class ="item-img">
+          const card = document.createElement("div");
+          card.className = "item";
+          card.innerHTML = `<div class ="item-img">
                             <img src="${item["image"]}" class="item-image">
                         </div>
                         <hr>
@@ -251,12 +260,12 @@ function findCats(event) {
                         </div>
                         `;
 
-        list_items.appendChild(card);
-      }
-    })
+          list_items.appendChild(card);
+        }
+      })
 
-    .catch(function (error) {
-      console.log(error);
-    });
-}
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 };
