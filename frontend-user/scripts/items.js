@@ -4,7 +4,7 @@ window.onload = async function () {
   document.getElementById("get-favs").addEventListener("click", getFavs);
   document.getElementById("find-category").addEventListener("click", findCats);
   document.getElementById("logout").addEventListener("click", logout);
-  let search_item_url = "http://127.0.0.1:8000/api/categories/getitems";
+
   var item_token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
@@ -14,7 +14,7 @@ window.onload = async function () {
     event.preventDefault();
     console.log("hello");
 
-    fetch(search_item_url, {
+    fetch("http://127.0.0.1:8000/api/items/searchitem", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json, text-plain, /",
