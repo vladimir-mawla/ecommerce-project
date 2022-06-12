@@ -39,10 +39,13 @@ function onClick(event) {
       console.log(res.data);
       var access_token = res.data["access_token"]
       localStorage.setItem('access_token', access_token)
-      if (res.data["error"] == "Unauthorized") {
-        alert("User not Found");
-      } else {
-        location.href = "../pages/users.html";
+      if(res.data["access_token"]){
+          
+        localStorage.setItem('access_token', res.data["access_token"]);
+        location.href = "./pages/users.html"
+
+      }else {
+          alert("User not Found")
       }
     })
     
