@@ -21,52 +21,45 @@ function onClick(event) {
   let add_name = document.getElementById("add_name");
   let add_price = document.getElementById("add_price");
   let add_cat = document.getElementById("add_cat");
-  console.log(add_img.value)
-  console.log(add_name.value)
-  console.log(add_price.value)
-  console.log(add_cat.value)
 
-  fetch("http://127.0.0.1:8000/api/items/additem", {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json, text-plain, /",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-TOKEN": login_token,
-    },
 
-    method: "post",
-    credentials: "same-origin",
-    body: JSON.stringify({
-        image: add_img.value,
-        name: add_name.value,
-        price: add_price.value,
-        category_id: add_cat.value,
-      }),
-  })
 
-    .then((response) =>
-      response.json().then((data) => ({
-        data: data,
-        status: response.status,
-      }))
-    )
+  var s;
+    var file = add_img.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        s = reader.result;
+       
 
-    .then((res) => {
-      if(res.data["message"]){
-        alert("price must be integer")
-      }
-
+      fetch("http://127.0.0.1:8000/api/items/additem", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json, text-plain, /",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-TOKEN": login_token,
+        },
+        method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+            image: s,
+            name: add_name.value,
+            price: add_price.value,
+            category_id: add_cat.value,
+          }),
+      })
+        .then((res) => {
+          console.log(res)
+        })
       
-    })
+        
+    }
+    reader.readAsDataURL(file);
     
-    .catch(function (error) {
-      console.log(error);
-    });
-    add_img.value = '';
-    add_name.value = '';
-    add_price.value = '';
-    add_cat.value = '';
+
+
+    
 }
+
 
 function logout() {
 

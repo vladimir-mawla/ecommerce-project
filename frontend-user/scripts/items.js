@@ -104,7 +104,7 @@ window.onload = async function () {
                         </div>
                         <hr>
                         <div class="item-price">
-                            <h3>${item["price"]}$  <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
+                            <h3>${item["price"]} <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
 
@@ -189,8 +189,7 @@ window.onload = async function () {
     .catch(function (error) {
       console.log(error);
     });
-  var fav_list;
-
+    
   function getFavs() {
     var change = document.getElementById("get-favs");
     change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
