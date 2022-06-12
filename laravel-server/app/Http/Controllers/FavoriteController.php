@@ -37,4 +37,12 @@ class FavoriteController extends Controller
             "favorites" => $favorite_items
         ], 200);
     }
+
+    public function unfavorite(Request $request){
+        
+        Favorite::where('user_id',$request->user_id)->where('item_id',$request->item_id)->delete();
+        return response()->json([
+            "success" => "Deleted from favorites",
+        ], 200);
+    }
 }

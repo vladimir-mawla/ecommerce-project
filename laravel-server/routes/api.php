@@ -37,6 +37,7 @@ Route::group(['prefix' => 'items'], function(){
 Route::group(['prefix' => 'favorites'], function(){
     Route::post('/favorite', [FavoriteController::class, 'favorite']);
     Route::post('/getfavorites', [FavoriteController::class, 'getFavorites']);
+    Route::post('/unfavorite', [FavoriteController::class, 'unfavorite']);
 
 });
 

@@ -108,6 +108,8 @@ window.onload = async function () {
                             <h3>${item["price"]}$ <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
+        
+                        
 
         list_items.appendChild(card);
       }
@@ -194,10 +196,9 @@ window.onload = async function () {
   function getFavs() {
     var change = document.getElementById("get-favs");
     change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
-    let favs_url = "http://127.0.0.1:8000/api/favorites/getfavorites";
     var list_items = document.getElementById("list-items");
 
-    fetch(favs_url, {
+    fetch("http://127.0.0.1:8000/api/favorites/getfavorites", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json, text-plain, /",
@@ -208,7 +209,7 @@ window.onload = async function () {
       method: "post",
       credentials: "same-origin",
       body: JSON.stringify({
-        user_id: "7",
+        user_id: user_id,
       }),
     })
       .then((response) =>
