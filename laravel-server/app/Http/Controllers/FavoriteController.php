@@ -15,11 +15,21 @@ class FavoriteController extends Controller
         $favorite = new Favorite;
         $favorite->user_id = $request->user_id;
         $favorite->item_id = $request->item_id;
-        $favorite->save();
+        $hello = Favorite::where('user_id', $request->user_id)->where('item_id', $request->item_id)->get();
+        if(count($hello) == 0){
+            $favorite->save();
+            return response()->json([
+                "status" => "Success",
+            ], 200);
 
-        return response()->json([
-            "status" => "Success",
-        ], 200);
+        } else{
+            return response()->json([
+                "status" => "Fail",
+            ], 200);
+        }
+        
+
+
     }
     //Get user's favorites
     public function getFavorites(Request $request){
@@ -44,5 +54,17 @@ class FavoriteController extends Controller
         return response()->json([
             "success" => "Deleted from favorites",
         ], 200);
+    }
+
+    public function checkFavorite(Request $request){
+        $user_id = $request->user_id;
+        $item_id = $request->item_id;
+        $hello = Favorite::where('user_id', $user_id)->where('item_id', $item_id)->get();
+
+        if(count($hello) == 0){
+            echo "hi";
+        } else{
+            echo "bye";
+        }
     }
 }
