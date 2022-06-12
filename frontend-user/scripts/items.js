@@ -3,6 +3,7 @@ window.onload = async function () {
   document.getElementById("find-item").addEventListener("click", findItems);
   document.getElementById("get-favs").addEventListener("click", getFavs);
   document.getElementById("find-category").addEventListener("click", findCats);
+  document.getElementById("logout").addEventListener("click", logout);
   let search_item_url = "http://127.0.0.1:8000/api/categories/getitems";
   var item_token = document
     .querySelector('meta[name="csrf-token"]')
@@ -324,4 +325,28 @@ window.onload = async function () {
         cat.appendChild(category);
       }
     });
+
+    function logout() {
+      fetch("http://127.0.0.1:8000/api/logout", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json, text-plain, /",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-TOKEN": login_token,
+          Authorization: `Bearer ${access_token}`,
+          Accept: "application/json",
+        },
+        method: "post",
+      })
+        .then((response) =>
+          response.json().then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+        )
+    
+        .then((response) => {
+          location.href = "../index.html";
+        });
+    }
 };
