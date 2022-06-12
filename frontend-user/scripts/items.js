@@ -296,4 +296,33 @@ window.onload = async function () {
         console.log(error);
       });
   }
+
+var cat = document.getElementById("cat_search")
+
+  fetch("http://127.0.0.1:8000/api/categories/getcats", {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json, text-plain, /",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": item_token,
+    },
+    method: "get",
+    credentials: "same-origin",
+  })
+  .then((response) =>
+  response.json().then((data) => ({
+    data: data,
+    status: response.status,
+  }))
+  )
+  .then(function (response){
+      console.log(response.data);
+      for (var i=0; i < response.data["name"].length; i++){
+          var category = document.createElement('option');
+          category.setAttribute("value", response.data["name"][i]["id"]);
+          category.innerHTML = response.data["name"][i]["name"];
+          cat.appendChild(category);
+      }
+  })
+
 };

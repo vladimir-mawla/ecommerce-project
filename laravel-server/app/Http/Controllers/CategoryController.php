@@ -41,11 +41,10 @@ class CategoryController extends Controller
         }
         //Get all categories
         public function getCats(Request $request){
-            $user_type = $request->user_type;
             $category = Category::all();
             return response()->json([
                 "status" => "success",
-                "items" => $category
+                "name" => $category
             ], 200);
         }
             //Get category's item
