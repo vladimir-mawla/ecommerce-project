@@ -104,21 +104,49 @@ window.onload = async function () {
                         </div>
                         <hr>
                         <div class="item-price">
-                            <h3>${item["price"]} <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
+                            <h3>${item["price"]}$  <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
 
         list_items.appendChild(card);
-        
-
       }
-      var btn = document.getElementsByClassName("fav")
-      for (let i of btn){
-        
-        
-        i.addEventListener("click", function onClick() {
-          i.style.color = "red";
-          console.log(i.id)
+      var btn = document.getElementsByClassName("fav");
+      for (let item of btn) {
+        item.addEventListener("click", function onClick() {
+          item.style.color = "red";
+          console.log(item.id);
+
+          fetch("http://127.0.0.1:8000/api/favorites/favorite", {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json, text-plain, /",
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRF-TOKEN": item_token,
+            },
+
+            method: "post",
+            credentials: "same-origin",
+            body: JSON.stringify({
+              user_id: user_id,
+              item_id: item.id,
+            }),
+          })
+            .then((response) =>
+              response.json().then((data) => ({
+                data: data,
+                status: response.status,
+              }))
+            )
+
+            .then((res) => {
+              if (res.data["message"]) {
+                alert("price must be integer");
+              }
+            })
+
+            .catch(function (error) {
+              console.log(error);
+            });
         });
       }
     });
@@ -161,6 +189,7 @@ window.onload = async function () {
     .catch(function (error) {
       console.log(error);
     });
+  var fav_list;
 
   function getFavs() {
     var change = document.getElementById("get-favs");
