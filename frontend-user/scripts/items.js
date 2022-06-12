@@ -3,9 +3,9 @@ window.onload = async function () {
   document.getElementById("find-item").addEventListener("click", findItems);
   document.getElementById("get-favs").addEventListener("click", getFavs);
   document.getElementById("find-category").addEventListener("click", findCats);
-  let search_item_url = "http://127.0.0.1:8000/api/items/searchitem";
+  let search_item_url = "http://127.0.0.1:8000/api/categories/getitems";
   var item_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-  let search_cat_url = "http://127.0.0.1:8000/api/categories/searchcat";
+  let search_cat_url = "http://127.0.0.1:8000/api/categories/getcatitems";
 
 
   function findItems(event) {
@@ -207,8 +207,8 @@ window.onload = async function () {
 
 function findCats(event) {
   event.preventDefault();
-
-  fetch(search_cat_url, {
+  console.log(cat_search.value)
+  fetch("http://127.0.0.1:8000/api/categories/getcatitems", {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json, text-plain, /",
@@ -219,7 +219,7 @@ function findCats(event) {
     method: "post",
     credentials: "same-origin",
     body: JSON.stringify({
-      name: cat_search.value,
+      category_id: cat_search.value,
     }),
   })
     .then((response) =>
@@ -233,8 +233,8 @@ function findCats(event) {
       var change = document.getElementById("get-favs");
       change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
       list_items.innerHTML = "";
-      for (var i = 0; i < response.data["result"].length; i++) {
-        var item = response.data["result"][i];
+      for (var i = 0; i < response.data["favorites"].length; i++) {
+        var item = response.data["favorites"][i];
 
         const card = document.createElement("div");
         card.className = "item";
