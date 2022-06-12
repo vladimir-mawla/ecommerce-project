@@ -48,4 +48,20 @@ class CategoryController extends Controller
                 "items" => $category
             ], 200);
         }
+            //Get category's item
+        public function getCatitems(Request $request){
+            $category_id = $request->category_id;
+            
+            //$favorites = User::with('favorite')->get();
+            //return view('view_name', compact('favorites'));
+
+            $category_items = Category::find($category_id)->items()->get();
+            
+            //$favorites = Item::with('user_id');
+            //$favorite_items= $favorites->favorites();
+            return response()->json([
+                "status" => "success",
+                "favorites" => $category_items
+            ], 200);
+        }
 }
