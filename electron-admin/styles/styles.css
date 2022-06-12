@@ -64,3 +64,16 @@
     color: #b3b3b3;
     font-size: 12px;
 }
+.upload {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.upload_form{
+    padding: 2%;
+    width: 100%;
+}
+.upload_form div {
+    padding: 5% 10%;
+    width: 500px;
+}
