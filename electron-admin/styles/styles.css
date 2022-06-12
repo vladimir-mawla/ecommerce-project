@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.nav {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    background-color: rgb(169, 169, 169);
+}
+.nav-item {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-left:20px;
+}
+.nav-item > li {
+    margin-top:25px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+/*Login and Signup pages*/
+.form {
+    position: relative;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 50px auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+    font-family: sans-serif;
+    background: #f1f0f0;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form button {
+    font-family: sans-serif;
+    text-transform: uppercase;
+    background: #525952;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.form button:hover {
+    background: #718072;
+}
+.form .goto-link {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
