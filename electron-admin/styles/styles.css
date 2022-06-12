@@ -39,7 +39,7 @@
     background: #f1f0f0;
     width: 100%;
     border: 0;
-    margin: 0 0 15px;
+    margin: 10px 15px;
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
@@ -67,6 +67,7 @@
 .upload {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     
 }
 .upload_form{
@@ -75,8 +76,12 @@
 }
 .upload_form div {
     padding: 5% 10%;
-    width: 500px;
+    width: 100%;
 }
 #logout {
     height: 20px;
+}
+#logout-div{
+    padding-right: 70px;
+    padding-top: 25px;
 }

@@ -12,17 +12,25 @@
 
 <body>
   <div class="container">
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-item">
+          <h2>E-shop</h2>
+        </div>
+        <div id="logout-div"><button id="logout">Logout</button></div>
+      </nav>
+    </div>
 
     <h2>Add Item</h2>
-    <div class="upload">
+    <div class="form">
       <form>
         <div class="upload_form">
-          <div><label for="img">Select image:</label>
+          <label for="img">Select image:</label>
             <input name="img" type="file" id="add_img">
-          </div>
-          <div><input type="text" placeholder="Item's name" id="add_name"></div>
-          <div><input type="text" placeholder="Items price" id="add_price"></div>
-          <div><label>Search Categories:</label>
+          
+          <input type="text" placeholder="Item's name" id="add_name">
+          <input type="text" placeholder="Items price" id="add_price">
+          <label>Search Categories:</label>
             <select name="categories" id="add_cat">
               <option value="1">Food</option>
               <option value="2">Fashion</option>
@@ -30,11 +38,11 @@
               <option value="4">Kitchen</option>
               <option value="5">Toys</option>
             </select>
-          </div>
-          <div><button id="add_item" >Submit</button></div>
+          
+          <div><button id="add_item">Submit</button></div>
         </div>
       </form>
-      <button id="logout">Logout</button>
+
 
     </div>
 
