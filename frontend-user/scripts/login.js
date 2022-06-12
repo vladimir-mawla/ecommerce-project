@@ -42,10 +42,12 @@ function onClick(event) {
       if(res.data["access_token"]){
           
         localStorage.setItem('access_token', res.data["access_token"]);
-        location.href = "./pages/users.html"
+        location.href = "./users.html"
 
       }else {
           alert("User not Found")
+          login_email.value = "";
+          login_password.value = "";
       }
     })
     
