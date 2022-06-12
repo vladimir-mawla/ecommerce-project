@@ -41,6 +41,11 @@ function onClick(event) {
 
 
     .then((res) => {
+      if (res.data["password"] == "The password must be at least 6 characters."){
+        alert("The password must be at least 6 characters.")
+      }else if(res.data["email"] == "The email must be a valid email address."){
+        alert("The email must be a valid email address.")
+      }
       if (res.data["error"]) {
         alert("User not Found");
         login_email.value = "";
