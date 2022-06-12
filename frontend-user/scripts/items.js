@@ -53,7 +53,7 @@ window.onload = async function () {
                           </div>
                           <hr>
                           <div class="item-price">
-                              <h3>${item["price"]} $</h3>
+                              <h3>${item["price"]}$ <a class="fav" id="${item["id"]}">&#x2764;</a></h3>
                           </div>
                           `;
 
@@ -234,7 +234,7 @@ window.onload = async function () {
                               </div>
                               <hr>
                               <div class="item-price">
-                                  <h3>${favorite["price"]}$</h3>
+                                  <h3>${favorite["price"]}$ <a class="fav" id="${favorite["id"]}">&#x2764;</a></h3>
                               </div>
                               `;
 
@@ -285,7 +285,7 @@ window.onload = async function () {
                         </div>
                         <hr>
                         <div class="item-price">
-                            <h3>${item["price"]} $</h3>
+                            <h3>${item["price"]}$ <a class="fav" id="${item["id"]}">&#x2764;</a></h3>
                         </div>
                         `;
 
