@@ -332,7 +332,7 @@ window.onload = async function () {
           "Content-Type": "application/json",
           Accept: "application/json, text-plain, /",
           "X-Requested-With": "XMLHttpRequest",
-          "X-CSRF-TOKEN": login_token,
+          "X-CSRF-TOKEN": item_token,
           Authorization: `Bearer ${access_token}`,
           Accept: "application/json",
         },
