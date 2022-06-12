@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../styles/styles.css">
@@ -8,32 +9,36 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ecommerce-project</title>
 </head>
+
 <body>
     <div class="container">
-    <nav class="nav">
-        <div class="nav-item">
-        <h2>E-shop</h2>
-        </div>
-        <div>
-        <ul class="nav-item">
-            <li><input type="text" id="item_search" placeholder="Search Item"> <button id="find-item">Find</button></li>
-            <li><label for="dog-names">Search Categories:</label>
-                <select name="categories" id="cat_search">
-                    <!-- <option value="1">Food</option>
+        <nav class="nav">
+            <div class="nav-item">
+                <h2>E-shop</h2>
+            </div>
+            <div>
+                <ul class="nav-item">
+                    <li><input type="text" id="item_search" placeholder="Search Item"> <button
+                            id="find-item">Find</button></li>
+                    <li><label for="dog-names">Search Categories:</label>
+                        <select name="categories" id="cat_search">
+                            <!-- <option value="1">Food</option>
                     <option value="fashion">Fashion</option>
                     <option value="technology">Technology</option>
                     <option value="kitchen">Kitchen</option>
                     <option value="toys">Toys</option> -->
-                </select> <button id="find-category">Find</button></li>
-            <li><a href="#" id="get-favs">Your Favorites</a></li>
-            <li><a href="./pages/signup.html"></a></li>
-        </ul>
-        </div>
-      </nav>
-      </div>
-      <div id="list-items">
+                        </select> <button id="find-category">Find</button>
+                    </li>
+                    <li><a href="#" id="get-favs">Your Favorites</a></li>
+                    <li><a href="./pages/signup.html"></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="list-items">
 
-      </div>
-      <script src="../scripts/items.js"></script>
+    </div>
+    <script src="../scripts/items.js"></script>
 </body>
+
 </html>

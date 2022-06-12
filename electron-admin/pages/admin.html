@@ -17,20 +17,30 @@
         <div class="nav-item">
           <h2>E-shop</h2>
         </div>
-        <div id="logout-div"><button id="logout">Logout</button></div>
+        <div>
+          <ul class="nav-item">
+            <li>
+              <link id="add-item-form">Add Item</link>
+            </li>
+            <li>
+              <link id="add-cat-form">Add Category</link>
+            </li>
+            <li><button id="logout">Logout</button></li>
+          </ul>
+        </div>
       </nav>
-    </div>
 
-    <h2>Add Item</h2>
-    <div class="form">
-      <form>
-        <div class="upload_form">
-          <label for="img">Select image:</label>
+
+      <div class="form">
+
+        <form>
+          <div class="upload_form">
+            <label for="img">Select image:</label>
             <input name="img" type="file" id="add_img">
-          
-          <input type="text" placeholder="Item's name" id="add_name">
-          <input type="text" placeholder="Items price" id="add_price">
-          <label>Search Categories:</label>
+
+            <input type="text" placeholder="Item's name" id="add_name">
+            <input type="text" placeholder="Items price" id="add_price">
+            <label>Search Categories:</label>
             <select name="categories" id="add_cat">
               <option value="1">Food</option>
               <option value="2">Fashion</option>
@@ -38,18 +48,18 @@
               <option value="4">Kitchen</option>
               <option value="5">Toys</option>
             </select>
-          
-          <div><button id="add_item">Submit</button></div>
-        </div>
-      </form>
 
+            <div><button id="add_item">Submit</button></div>
+          </div>
+        </form>
+
+
+      </div>
 
     </div>
 
-  </div>
-
-  <!-- You can also require other files to run in this process -->
-  <script src="../scripts/admin.js"></script>
+    <!-- You can also require other files to run in this process -->
+    <script src="../scripts/admin.js"></script>
 </body>
 
 </html>
