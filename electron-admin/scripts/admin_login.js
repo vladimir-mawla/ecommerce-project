@@ -40,7 +40,7 @@ function onClick(event) {
         if(res.data["access_token"]){
 
           localStorage.setItem('access_token', res.data["access_token"]);
-          location.href = "../pages/admin.html"
+          location.href = "./pages/admin.html"
 
         }else {
             alert("User not Found")
