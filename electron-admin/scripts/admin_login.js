@@ -38,9 +38,9 @@ function onClick(event) {
         
         console.log(res.data)
         if(res.data["access_token"]){
-          
+
           localStorage.setItem('access_token', res.data["access_token"]);
-          location.href = "../index.html"
+          location.href = "../pages/admin.html"
 
         }else {
             alert("User not Found")
