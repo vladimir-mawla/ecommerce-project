@@ -6,6 +6,7 @@
 // process.
 
 document.getElementById("add-cat-form").addEventListener("click", addNewCat);
+document.getElementById("add-cat-form").addEventListener("click", addNewItem);
 document.getElementById("add_item").addEventListener("click", onClick);
 document.getElementById("logout").addEventListener("click", logout);
 var access_token = localStorage.getItem("access_token");
@@ -13,7 +14,10 @@ let login_token = document
   .querySelector('meta[name="csrf-token"]')
   .getAttribute("content");
 
-
+function addNewItem(){
+  var change = document.getElementById("add-item-form");
+    change.innerHTML = `<a onClick="window.location.reload();">Add Item</a>`;
+}
 
 
   var cat = document.getElementById("add_cat");
