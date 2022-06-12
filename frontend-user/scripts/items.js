@@ -189,7 +189,7 @@ window.onload = async function () {
     .catch(function (error) {
       console.log(error);
     });
-    
+
   function getFavs() {
     var change = document.getElementById("get-favs");
     change.innerHTML = `<a onClick="window.location.reload();">Back to All Items</a>`;
@@ -297,7 +297,7 @@ window.onload = async function () {
       });
   }
 
-var cat = document.getElementById("cat_search")
+  var cat = document.getElementById("cat_search");
 
   fetch("http://127.0.0.1:8000/api/categories/getcats", {
     headers: {
@@ -309,20 +309,19 @@ var cat = document.getElementById("cat_search")
     method: "get",
     credentials: "same-origin",
   })
-  .then((response) =>
-  response.json().then((data) => ({
-    data: data,
-    status: response.status,
-  }))
-  )
-  .then(function (response){
+    .then((response) =>
+      response.json().then((data) => ({
+        data: data,
+        status: response.status,
+      }))
+    )
+    .then(function (response) {
       console.log(response.data);
-      for (var i=0; i < response.data["name"].length; i++){
-          var category = document.createElement('option');
-          category.setAttribute("value", response.data["name"][i]["id"]);
-          category.innerHTML = response.data["name"][i]["name"];
-          cat.appendChild(category);
+      for (var i = 0; i < response.data["name"].length; i++) {
+        var category = document.createElement("option");
+        category.setAttribute("value", response.data["name"][i]["id"]);
+        category.innerHTML = response.data["name"][i]["name"];
+        cat.appendChild(category);
       }
-  })
-
+    });
 };
