@@ -233,8 +233,8 @@ window.onload = async function () {
               .catch(function (error) {
                 console.log(error);
               });
-            liked.filter(function (x) {
-              return x !== item.id;
+            liked.filter(function (remove) {
+              return remove !== item.id;
             });
             // console.log(liked)
           } else {
