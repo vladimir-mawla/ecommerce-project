@@ -179,8 +179,6 @@ window.onload = async function () {
             console.log(e);
             if (response.data["status"] == "liked") {
               e.style.color = "red";
-            } else if (response.data["status"] == "not liked") {
-              e.style.color = "black";
             }
           })
 
@@ -438,46 +436,4 @@ window.onload = async function () {
         location.href = "../index.html";
       });
   }
-
-  // var liked = document.getElementBy("liked")
-  //     console.log(liked)
-  //     liked.addEventListener("click", function onClick() {
-  //       item.style.color = "black";
-  //       liked.removeAttribute('id');
-  //       console.log(item.id);
-
-  //       fetch("http://127.0.0.1:8000/api/favorites/unfavorite", {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json, text-plain, /",
-  //           "X-Requested-With": "XMLHttpRequest",
-  //           "X-CSRF-TOKEN": item_token,
-  //         },
-
-  //         method: "post",
-  //         credentials: "same-origin",
-  //         body: JSON.stringify({
-  //           user_id: user_id,
-  //           item_id: item.id,
-  //         }),
-  //       })
-  //         .then((response) =>
-  //           response.json().then((data) => ({
-  //             data: data,
-  //             status: response.status,
-  //           }))
-  //         )
-
-  //         .then((res) => {
-  //           if (res.data["message"]) {
-  //             alert("price must be integer");
-  //           }
-  //           // let liked = document.getElementsByClassName("fav")
-  //           // liked.id = "liked";
-  //         })
-
-  //         .catch(function (error) {
-  //           console.log(error);
-  //         });
-  //     });
 };
