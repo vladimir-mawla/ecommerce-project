@@ -148,15 +148,63 @@ window.onload = async function () {
                             <h3>${item["price"]}$ <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
-        
                         
 
+        //console.log(response.data["liked"])
+        
+
         list_items.appendChild(card);
+        fetch("http://127.0.0.1:8000/api/favorites/checkfavorite", {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json, text-plain, /",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": item_token,
+          },
+
+          method: "post",
+          credentials: "same-origin",
+          body: JSON.stringify({
+            user_id: user_id,
+            item_id: item.id,
+          }),
+        })
+          .then((response) =>
+            response.json().then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+          )
+
+          .then((response) => {
+            var e = document.getElementById(`${item["id"]}`)
+            console.log(e)
+            if(response.data["status"]=="liked"){
+              e.style.color = "red";
+            }else if(response.data["status"]=="not liked"){
+              e.style.color = "black";
+            }
+
+          })
+
+          .catch(function (error) {
+            console.log(error);
+          });
+        
+        var e = document.getElementById(`${item["id"]}`)
+        console.log(e)
+        if(response.data["liked"]=="yes"){
+          e.style.color = "red";
+        }else if(response.data["liked"]=="no"){
+          e.style.color = "black";
+        }
+        
+        
       }
       var btn = document.getElementsByClassName("fav");
       for (let item of btn) {
         item.addEventListener("click", function onClick() {
-          item.style.color = "red";
+          item.style.color = "red"
           // document.getElementById(`${item["id"]}`).className = "liked";
           console.log(item.id);
 

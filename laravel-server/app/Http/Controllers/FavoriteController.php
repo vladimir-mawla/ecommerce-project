@@ -62,9 +62,13 @@ class FavoriteController extends Controller
         $hello = Favorite::where('user_id', $user_id)->where('item_id', $item_id)->get();
 
         if(count($hello) == 0){
-            echo "hi";
+            return response()->json([
+                "status" => "not liked",
+            ], 200);
         } else{
-            echo "bye";
+            return response()->json([
+                "status" => "liked",
+            ], 200);
         }
     }
 }
