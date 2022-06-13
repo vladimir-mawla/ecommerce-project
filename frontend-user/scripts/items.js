@@ -148,10 +148,8 @@ window.onload = async function () {
                             <h3>${item["price"]}$ <a class="fav" id="${item["id"]}">&#x2764;</a>	</h3>
                         </div>
                         `;
-                        
 
         //console.log(response.data["liked"])
-        
 
         list_items.appendChild(card);
         fetch("http://127.0.0.1:8000/api/favorites/checkfavorite", {
@@ -177,73 +175,111 @@ window.onload = async function () {
           )
 
           .then((response) => {
-            var e = document.getElementById(`${item["id"]}`)
-            console.log(e)
-            if(response.data["status"]=="liked"){
+            var e = document.getElementById(`${item["id"]}`);
+            console.log(e);
+            if (response.data["status"] == "liked") {
               e.style.color = "red";
-            }else if(response.data["status"]=="not liked"){
+            } else if (response.data["status"] == "not liked") {
               e.style.color = "black";
             }
-
           })
 
           .catch(function (error) {
             console.log(error);
           });
-        
-        var e = document.getElementById(`${item["id"]}`)
-        console.log(e)
-        if(response.data["liked"]=="yes"){
+
+        var e = document.getElementById(`${item["id"]}`);
+        console.log(e);
+        if (response.data["liked"] == "yes") {
           e.style.color = "red";
-        }else if(response.data["liked"]=="no"){
+        } else if (response.data["liked"] == "no") {
           e.style.color = "black";
         }
-        
-        
       }
       var btn = document.getElementsByClassName("fav");
+      var liked = [];
       for (let item of btn) {
         item.addEventListener("click", function onClick() {
-          item.style.color = "red"
-          // document.getElementById(`${item["id"]}`).className = "liked";
-          console.log(item.id);
+          if (liked.includes(item.id)) {
+            item.style.color = "black";
+            // document.getElementById(`${item["id"]}`).className = "liked";
+            console.log(item.id);
 
-          fetch("http://127.0.0.1:8000/api/favorites/favorite", {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json, text-plain, /",
-              "X-Requested-With": "XMLHttpRequest",
-              "X-CSRF-TOKEN": item_token,
-            },
+            fetch("http://127.0.0.1:8000/api/favorites/unfavorite", {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json, text-plain, /",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": item_token,
+              },
 
-            method: "post",
-            credentials: "same-origin",
-            body: JSON.stringify({
-              user_id: user_id,
-              item_id: item.id,
-            }),
-          })
-            .then((response) =>
-              response.json().then((data) => ({
-                data: data,
-                status: response.status,
-              }))
-            )
-
-            .then((res) => {
-
-              // let liked = document.getElementsByClassName("fav")
-              // liked.id = "liked";
+              method: "post",
+              credentials: "same-origin",
+              body: JSON.stringify({
+                user_id: user_id,
+                item_id: item.id,
+              }),
             })
+              .then((response) =>
+                response.json().then((data) => ({
+                  data: data,
+                  status: response.status,
+                }))
+              )
 
-            .catch(function (error) {
-              console.log(error);
+              .then((res) => {
+                // let liked = document.getElementsByClassName("fav")
+                // liked.id = "liked";
+              })
+
+              .catch(function (error) {
+                console.log(error);
+              });
+            liked.filter(function (x) {
+              return x !== item.id;
             });
+            // console.log(liked)
+          } else {
+            item.style.color = "red";
+            // document.getElementById(`${item["id"]}`).className = "liked";
+            console.log(item.id);
+
+            fetch("http://127.0.0.1:8000/api/favorites/favorite", {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json, text-plain, /",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": item_token,
+              },
+
+              method: "post",
+              credentials: "same-origin",
+              body: JSON.stringify({
+                user_id: user_id,
+                item_id: item.id,
+              }),
+            })
+              .then((response) =>
+                response.json().then((data) => ({
+                  data: data,
+                  status: response.status,
+                }))
+              )
+
+              .then((res) => {
+                // let liked = document.getElementsByClassName("fav")
+                // liked.id = "liked";
+              })
+
+              .catch(function (error) {
+                console.log(error);
+              });
+            liked.push(item.id);
+            console.log(liked);
+          }
         });
       }
     });
-
-  
 
   function getFavs() {
     var change = document.getElementById("get-favs");
@@ -379,71 +415,69 @@ window.onload = async function () {
       }
     });
 
-    function logout() {
-      fetch("http://127.0.0.1:8000/api/logout", {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json, text-plain, /",
-          "X-Requested-With": "XMLHttpRequest",
-          "X-CSRF-TOKEN": item_token,
-          Authorization: `Bearer ${access_token}`,
-          Accept: "application/json",
-        },
-        method: "post",
-      })
-        .then((response) =>
-          response.json().then((data) => ({
-            data: data,
-            status: response.status,
-          }))
-        )
-    
-        .then((response) => {
-          location.href = "../index.html";
-        });
-    }
+  function logout() {
+    fetch("http://127.0.0.1:8000/api/logout", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text-plain, /",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": item_token,
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/json",
+      },
+      method: "post",
+    })
+      .then((response) =>
+        response.json().then((data) => ({
+          data: data,
+          status: response.status,
+        }))
+      )
 
+      .then((response) => {
+        location.href = "../index.html";
+      });
+  }
 
+  // var liked = document.getElementBy("liked")
+  //     console.log(liked)
+  //     liked.addEventListener("click", function onClick() {
+  //       item.style.color = "black";
+  //       liked.removeAttribute('id');
+  //       console.log(item.id);
 
-    // var liked = document.getElementBy("liked")
-    //     console.log(liked)
-    //     liked.addEventListener("click", function onClick() {
-    //       item.style.color = "black";
-    //       liked.removeAttribute('id');
-    //       console.log(item.id);
+  //       fetch("http://127.0.0.1:8000/api/favorites/unfavorite", {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Accept: "application/json, text-plain, /",
+  //           "X-Requested-With": "XMLHttpRequest",
+  //           "X-CSRF-TOKEN": item_token,
+  //         },
 
-    //       fetch("http://127.0.0.1:8000/api/favorites/unfavorite", {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Accept: "application/json, text-plain, /",
-    //           "X-Requested-With": "XMLHttpRequest",
-    //           "X-CSRF-TOKEN": item_token,
-    //         },
+  //         method: "post",
+  //         credentials: "same-origin",
+  //         body: JSON.stringify({
+  //           user_id: user_id,
+  //           item_id: item.id,
+  //         }),
+  //       })
+  //         .then((response) =>
+  //           response.json().then((data) => ({
+  //             data: data,
+  //             status: response.status,
+  //           }))
+  //         )
 
-    //         method: "post",
-    //         credentials: "same-origin",
-    //         body: JSON.stringify({
-    //           user_id: user_id,
-    //           item_id: item.id,
-    //         }),
-    //       })
-    //         .then((response) =>
-    //           response.json().then((data) => ({
-    //             data: data,
-    //             status: response.status,
-    //           }))
-    //         )
+  //         .then((res) => {
+  //           if (res.data["message"]) {
+  //             alert("price must be integer");
+  //           }
+  //           // let liked = document.getElementsByClassName("fav")
+  //           // liked.id = "liked";
+  //         })
 
-    //         .then((res) => {
-    //           if (res.data["message"]) {
-    //             alert("price must be integer");
-    //           }
-    //           // let liked = document.getElementsByClassName("fav")
-    //           // liked.id = "liked";
-    //         })
-
-    //         .catch(function (error) {
-    //           console.log(error);
-    //         });
-    //     });
+  //         .catch(function (error) {
+  //           console.log(error);
+  //         });
+  //     });
 };
