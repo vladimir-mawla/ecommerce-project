@@ -112,3 +112,16 @@ form .goto-link {
     height: 100%;
     width: 100%;
 }
+button {
+    border-radius: 8px;
+    border-width: 0.5px;
+    width: 30%;
+    background-color: #797979;
+    color: #f1f0f0;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+#logout {
+    border-radius: 8px;
+    width: 120%;
+}
